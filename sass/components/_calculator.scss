@@ -4,10 +4,10 @@
   $firstChild: 1;
   width: 100%;
   flex: 4;
-  padding: 1rem;
+  padding: .5rem;
 
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: .5rem;
   grid-template-columns: repeat($columns, 1fr);
   grid-template-rows: repeat($rows, 1fr);
   $currentChild: 0 + $firstChild;
@@ -35,16 +35,16 @@
     font-size: 3.5rem;
     color: white;
     filter: grayscale(0.5);
+    transition: .1s ease-out;
+    backface-visibility: hidden;
 
     &:active {
-      transform: scale(1.1);
       filter: grayscale(0);
     }
 
     @media (hover: hover) {
       &:hover,
       &:active {
-        transform: scale(1.05);
         filter: grayscale(0);
       }
     }
