@@ -32,11 +32,11 @@ let operationsController = (function() {
 
   return {
     addCurrent: function(number) {
+      currentValue = currentValue.toString();
       if(currentValue === '' && number == 0) {
         return;
       }
-
-      if(afterEvaluate) {
+      else if (afterEvaluate) {
         afterEval(number);
       }
       else {
@@ -45,6 +45,31 @@ let operationsController = (function() {
       }
 
       return currentValue;
+    },
+
+    changeSign: function(number) {
+      let lastChar = currentExpression.toString().charAt(currentExpression.length-1);
+      let minus = currentExpression.toString().charAt((currentExpression.length - number.toString().length) - 2);
+
+      if (currentExpression.toString().length == 0) {
+        currentExpression += '(' + number + ')';
+      }
+      else if(minus == '-') {
+        currentExpression = currentExpression.toString().slice(0, (currentExpression.length - number.toString().length) - 3);
+        currentExpression += '(' + number + ')';
+      }
+      else if(lastChar == ')') {
+        currentExpression = currentExpression.toString().slice(0, currentExpression.length-number.toString().length - 1);
+        currentExpression += '(' + number + ')';
+      }
+      else {
+        currentExpression = currentExpression.toString().slice(0, (currentExpression.length - number.toString().length) + 1);
+        currentExpression += '(' + number + ')';
+      }
+
+      currentValue *= -1;
+
+      return number;
     },
 
     addToExpression: function(sign) {
@@ -64,7 +89,7 @@ let operationsController = (function() {
 
     clearInput: function(current) {
       currentValue = '';
-      currentExpression = currentExpression.slice(0, currentExpression.length - current.length);
+      currentExpression = currentExpression.toString().slice(0, currentExpression.length - current.length);
     },
 
     clearAll: function() {
@@ -72,6 +97,12 @@ let operationsController = (function() {
       currentExpression = '';
       result = 0;
       afterEvaluate = false;
+    },
+
+    comma: function() {
+      currentValue += '.';
+      currentExpression += '.';
+      return currentValue;
     },
 
     test: function() {
@@ -102,6 +133,10 @@ let UIController = (function() {
       input.textContent = current;
     },
 
+    addComma: function() {
+      input.textContent += '.';
+    },
+
     updateExpression: function(expression, current) {
       stored.textContent = expression;
 
@@ -120,7 +155,7 @@ let UIController = (function() {
 
     evalUpdate: function(current) {
       input.textContent = current;
-      stored.textContent = '';
+      stored.textContent = '-';
     },
 
     clearInput: function() {
@@ -152,6 +187,8 @@ let calculatorController = (function(operationsCtrl, UICtrl) {
   function buttonClick(index) {
 
     switch(index) {
+
+      //clear
       case 0: {
         current = 0;
         expression = 0;
@@ -166,11 +203,26 @@ let calculatorController = (function(operationsCtrl, UICtrl) {
         break;
       }
 
+      //comma
+      case 18: {
+        current = operationsCtrl.comma();
+        UICtrl.addComma();
+        break;
+      }
+
+      //sign
+      case 16: {
+        current = current * -1;
+        current = operationsCtrl.changeSign(current);
+        UICtrl.updateCurrent(current);
+        break;
+      }
+
       //evaluation
       case 19:
-          current = operationsCtrl.evaluate();
-          UICtrl.evalUpdate(current);
-          break;
+        current = operationsCtrl.evaluate();
+        UICtrl.evalUpdate(current);
+        break;
 
       //sign buttons
       case 15:
