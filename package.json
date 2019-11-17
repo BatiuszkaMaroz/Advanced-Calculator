@@ -1,0 +1,12 @@
+{
+  "name": "the_7_1_pattern",
+  "version": "1.0.0",
+  "description": "Template for 7-1 Architecture",
+  "main": "index.js",
+  "scripts": {
+    "live-server": "live-server",
+    "sass": "sass --watch sass/main.scss:css/main.css"
+  },
+  "author": "Batiuszka Maroz",
+  "license": "ISC"
+}

@@ -1,0 +1,113 @@
+.calculator {
+  $columns: 4;
+  $rows: 5;
+  $firstChild: 1;
+  width: 100%;
+  flex: 4;
+  padding: 1rem;
+
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-template-rows: repeat($rows, 1fr);
+  $currentChild: 0 + $firstChild;
+  $currentRow: 0;
+  $currentColumn: 0;
+  @for $i from 1 through $rows {
+    $currentColumn: (((100% * $i) - 100%) * -1);
+    @for $j from 1 through $columns {
+      $currentRow: (((100% * $j) - 100%) * -1);
+       & > :nth-child(#{$currentChild}) {
+        background-position: $currentRow $currentColumn;
+      }
+      $currentChild: $currentChild + 1;
+    }
+  }
+
+  & > * {
+    background-size: #{$columns * 100%} #{$rows * 100%};
+    background-image: linear-gradient(45deg, #f7b731, #fa8231);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: white;
+    filter: grayscale(0.5);
+
+    &:active {
+      transform: scale(1.1);
+      filter: grayscale(0);
+    }
+
+    @media (hover: hover) {
+      &:hover,
+      &:active {
+        transform: scale(1.05);
+        filter: grayscale(0);
+      }
+    }
+  }
+
+  // & > :nth-child(2) {
+  //   background-position: 0 0;
+  // }
+  // & > :nth-child(3) {
+  //   background-position: -100% 0;
+  // }
+  // & > :nth-child(4) {
+  //   background-position: -200% 0;
+  // }
+  // & > :nth-child(5) {
+  //   background-position: -300% 0;
+  // }
+  // & > :nth-child(6) {
+  //   background-position: 0 -100%;
+  // }
+  // & > :nth-child(7) {
+  //   background-position: -100% -100%;
+  // }
+  // & > :nth-child(8) {
+  //   background-position: -200% -100%;
+  // }
+  // & > :nth-child(9) {
+  //   background-position: -300% -100%;
+  // }
+  // & > :nth-child(10) {
+  //   background-position: 0 -200%;
+  // }
+  // & > :nth-child(11) {
+  //   background-position: -100% -200%;
+  // }
+  // & > :nth-child(12) {
+  //   background-position: -200% -200%;
+  // }
+  // & > :nth-child(13) {
+  //   background-position: -300% -200%;
+  // }
+  // & > :nth-child(14) {
+  //   background-position: 0 -300%;
+  // }
+  // & > :nth-child(15) {
+  //   background-position: -100% -300%;
+  // }
+  // & > :nth-child(16) {
+  //   background-position: -200% -300%;
+  // }
+  // & > :nth-child(17) {
+  //   background-position: -300% -300%;
+  // }
+  // & > :nth-child(18) {
+  //   background-position: 0 -400%;
+  // }
+  // & > :nth-child(19) {
+  //   background-position: -100% -400%;
+  // }
+  // & > :nth-child(20) {
+  //   background-position: -200% -400%;
+  // }
+  // & > :nth-child(21) {
+  //   background-position: -300% -400%;
+  // }
+}
