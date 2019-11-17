@@ -6,8 +6,9 @@ let operationsController = (function() {
 
   function afterEval(number) {
     let sign = currentExpression[currentExpression.length - 2];
+    let before = currentExpression.charAt(currentExpression.length - 3);
 
-    if(sign == '+' || sign == '-' || sign == '/' || sign == '*') {
+    if(sign == '+' || (sign == '-' && before == '(') || sign == '/' || sign == '*') {
       currentValue += number;
       currentExpression += number;
       afterEvaluate = false;
@@ -73,6 +74,11 @@ let operationsController = (function() {
     },
 
     addToExpression: function(sign) {
+      let lastChar = currentExpression.charAt(currentExpression.length - 2);
+      let before = currentExpression.charAt(currentExpression.length - 3);
+      if(lastChar == '+' || (lastChar == '-' && before == '(') || lastChar == '*' || lastChar == '/') {
+        currentExpression = currentExpression.slice(0, currentExpression.length-3);
+      }
       currentExpression += ' ' + sign + ' ';
       currentValue = '';
       return currentExpression;
@@ -81,8 +87,8 @@ let operationsController = (function() {
     evaluate: function() {
       evalLastChar();
       result = eval(currentExpression);
-      currentValue = result;
-      currentExpression = result;
+      currentValue = result.toString();
+      currentExpression = result.toString();
       afterEvaluate = true;
       return result;
     },
@@ -97,6 +103,22 @@ let operationsController = (function() {
       currentExpression = '';
       result = 0;
       afterEvaluate = false;
+    },
+
+    backspace: function(current) {
+      current = current.toString();
+      currentExpression = currentExpression.slice(0, currentExpression.length - 1);
+
+      if(current.length > 0) {
+        current = current.slice(0, current.length - 1);
+      }
+      else {
+        current = '';
+      }
+      currentValue = current;
+      afterEvaluate = false;
+
+      return current;
     },
 
     comma: function() {
@@ -130,7 +152,12 @@ let UIController = (function() {
     },
 
     updateCurrent: function(current) {
-      input.textContent = current;
+      if(current.length < 1) {
+        input.textContent = 0;
+      }
+      else {
+        input.textContent = current;
+      }
     },
 
     addComma: function() {
@@ -140,16 +167,14 @@ let UIController = (function() {
     updateExpression: function(expression, current) {
       stored.textContent = expression;
 
-      let result = expression;
-
+      let result = expression.toString();
       let sign = result[result.length - 2];
 
-      if(sign == '+' || sign == '-' || sign == '/' || sign == '*') {
+      if(sign == '+' || sign == '/' || sign == '*') {
         result = result.slice(0, result.length - 2);
       }
 
       result = eval(result);
-
       input.textContent = result;
     },
 
@@ -200,6 +225,11 @@ let calculatorController = (function(operationsCtrl, UICtrl) {
         operationsCtrl.clearInput(current);
         UICtrl.clearInput();
         current = 0;
+        break;
+      }
+      case 2: {
+        current = operationsCtrl.backspace(current);
+        UICtrl.updateCurrent(current);
         break;
       }
 

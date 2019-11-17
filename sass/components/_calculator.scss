@@ -37,6 +37,7 @@
     filter: grayscale(0.5);
     transition: .1s ease-out;
     backface-visibility: hidden;
+    user-select: none;
 
     &:active {
       filter: grayscale(0);
