@@ -76,7 +76,7 @@ let operationsController = (function() {
     addToExpression: function(sign) {
       let lastChar = currentExpression.charAt(currentExpression.length - 2);
       let before = currentExpression.charAt(currentExpression.length - 3);
-      if(lastChar == '+' || (lastChar == '-' && before == '(') || lastChar == '*' || lastChar == '/') {
+      if(lastChar == '+' || (lastChar == '-' && (before == '(' || before == ' ' )) || lastChar == '*' || lastChar == '/') {
         currentExpression = currentExpression.slice(0, currentExpression.length-3);
       }
       currentExpression += ' ' + sign + ' ';
@@ -122,8 +122,11 @@ let operationsController = (function() {
     },
 
     comma: function() {
-      currentValue += '.';
-      currentExpression += '.';
+      let com = currentValue.toString();
+      if (!com.includes('.')) {
+        currentValue += '.';
+        currentExpression += '.';
+      }
       return currentValue;
     },
 
@@ -170,7 +173,7 @@ let UIController = (function() {
       let result = expression.toString();
       let sign = result[result.length - 2];
 
-      if(sign == '+' || sign == '/' || sign == '*') {
+      if(sign == '+' || sign == '-' || sign == '/' || sign == '*') {
         result = result.slice(0, result.length - 2);
       }
 
@@ -236,7 +239,7 @@ let calculatorController = (function(operationsCtrl, UICtrl) {
       //comma
       case 18: {
         current = operationsCtrl.comma();
-        UICtrl.addComma();
+        UICtrl.updateCurrent(current);
         break;
       }
 
