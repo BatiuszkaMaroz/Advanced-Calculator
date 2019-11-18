@@ -105,7 +105,7 @@ a {
 }
 .calculator > * {
   background-size: 400% 500%;
-  background-image: linear-gradient(45deg, #f7b731, #fa8231);
+  background-image: linear-gradient(45deg, #f1c40f, #f7b731, #fa8231, #f7b731, #f1c40f);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,6 +138,7 @@ a {
   font-family: "Roboto Mono", monospace;
   font-weight: 300;
   color: white;
+  overflow-x: scroll;
 }
 .result__stored {
   font-size: 3rem;
@@ -154,7 +155,8 @@ a {
   align-items: center;
   flex-direction: column;
   height: 100%;
-  background: linear-gradient(45deg, #d1d8e0, #a5b1c2);
+  background: linear-gradient(45deg, #ecf0f1, #bdc3c7, #95a5a6, #bdc3c7, #ecf0f1);
+  overflow: hidden;
 }
 @media only screen and (min-width: 45em) {
   .wrap {

@@ -8,15 +8,17 @@ let operationsController = (function() {
     let sign = currentExpression[currentExpression.length - 2];
     let before = currentExpression.charAt(currentExpression.length - 3);
 
-    if(sign == '+' || (sign == '-' && before == '(') || sign == '/' || sign == '*') {
+    if(sign == '+' || (sign == '-' && (before == '(' || before == ' ')) || sign == '/' || sign == '*') {
       currentValue += number;
       currentExpression += number;
       afterEvaluate = false;
     }
     else {
-      currentExpression = number;
+      currentExpression = '';
+      currentExpression += number;
       result = 0;
       currentValue = number;
+      afterEvaluate = false;
     }
   }
 
@@ -34,7 +36,7 @@ let operationsController = (function() {
   return {
     addCurrent: function(number) {
       currentValue = currentValue.toString();
-      if(currentValue === '' && number == 0) {
+      if(currentValue == '' && number == 0) {
         return;
       }
       else if (afterEvaluate) {
@@ -74,8 +76,8 @@ let operationsController = (function() {
     },
 
     addToExpression: function(sign) {
-      let lastChar = currentExpression.charAt(currentExpression.length - 2);
-      let before = currentExpression.charAt(currentExpression.length - 3);
+      let lastChar = currentExpression.toString().charAt(currentExpression.length - 2);
+      let before = currentExpression.toString().charAt(currentExpression.length - 3);
       if(lastChar == '+' || (lastChar == '-' && (before == '(' || before == ' ' )) || lastChar == '*' || lastChar == '/') {
         currentExpression = currentExpression.slice(0, currentExpression.length-3);
       }
@@ -124,6 +126,9 @@ let operationsController = (function() {
     comma: function() {
       let com = currentValue.toString();
       if (!com.includes('.')) {
+        if (currentValue.length < 1) {
+          currentValue += 0;
+        }
         currentValue += '.';
         currentExpression += '.';
       }
@@ -131,7 +136,7 @@ let operationsController = (function() {
     },
 
     test: function() {
-      console.log('currentValue:' + currentValue + 'currentExpression:' + currentExpression + 'result:' + result);
+      console.log('after:' + afterEvaluate +'\ncurrentValue:' + currentValue + '\ncurrentExpression:' + currentExpression + '\nresult:' + result);
     }
   };
 
@@ -192,7 +197,7 @@ let UIController = (function() {
 
     clearAll: function() {
       this.clearInput();
-      stored.textContent = '';
+      stored.textContent = '-';
     }
   }
 })();
@@ -314,9 +319,9 @@ let calculatorController = (function(operationsCtrl, UICtrl) {
         break;
       case 17:
         current = operationsCtrl.addCurrent(0);
-        if(current) {
+        // if(current) {
           UICtrl.updateCurrent(current);
-        }
+        // }
         break;
     }
   }
@@ -330,3 +335,33 @@ let calculatorController = (function(operationsCtrl, UICtrl) {
 })(operationsController, UIController);
 
 calculatorController.appStart();
+
+
+
+// let buttony = document.querySelectorAll('.calculator__button');
+
+// let x = 400;
+// let y = 500;
+// let xbase = 400;
+
+// function animeGradient() {
+//   let i = 1;
+//   let j = 1;
+//   buttony.forEach(elem => {
+//     elem.style.backgroundPosition = `${x}% ${y}%`;
+
+//     x -= 100;
+//     if (i % 4 == 0) x = xbase;
+//     if (j % 4 == 0) y -= 100;
+
+//     i++;
+//     j++;
+//   });
+//   xbase -= 400;
+//   x -= 400;
+//   y -= 500;
+
+//   // setTimeout(animeGradient(), 2000);
+// }
+
+// animeGradient();
