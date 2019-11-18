@@ -10,8 +10,6 @@
   font-weight: 300;
   color: white;
 
-  overflow-x: scroll;
-
   &__stored {
     font-size: 3rem;
     letter-spacing: -.4rem;
@@ -20,5 +18,8 @@
   &__input {
     margin-top: 1rem;
     font-size: 8rem;
+    width: 100%;
+    text-align: right;
+    overflow-x: scroll;
   }
 }

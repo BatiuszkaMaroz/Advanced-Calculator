@@ -36,7 +36,7 @@ let operationsController = (function() {
   return {
     addCurrent: function(number) {
       currentValue = currentValue.toString();
-      if(currentValue == '' && number == 0) {
+      if(currentValue == '0' && number == 0) {
         return;
       }
       else if (afterEvaluate) {
@@ -46,12 +46,12 @@ let operationsController = (function() {
         currentValue += number;
         currentExpression += number;
       }
-
       return currentValue;
     },
 
     changeSign: function(number) {
       let lastChar = currentExpression.toString().charAt(currentExpression.length-1);
+      let firstChar = currentExpression.toString().charAt((currentExpression.length - number.toString().length) - 1);
       let minus = currentExpression.toString().charAt((currentExpression.length - number.toString().length) - 2);
 
       if (currentExpression.toString().length == 0) {
@@ -63,6 +63,10 @@ let operationsController = (function() {
       }
       else if(lastChar == ')') {
         currentExpression = currentExpression.toString().slice(0, currentExpression.length-number.toString().length - 1);
+        currentExpression += '(' + number + ')';
+      }
+      else if(number.toString().includes('.') && firstChar == '') {
+        currentExpression = currentExpression.toString().slice(0, currentExpression.length-number.toString().length - 3);
         currentExpression += '(' + number + ')';
       }
       else {
@@ -87,8 +91,10 @@ let operationsController = (function() {
     },
 
     evaluate: function() {
+      let divider = 10000000000; //To prevent 0.1 + 0.2 != 0.3 problem
       evalLastChar();
       result = eval(currentExpression);
+      result = (Math.floor(result*divider)) / divider;
       currentValue = result.toString();
       currentExpression = result.toString();
       afterEvaluate = true;
@@ -182,7 +188,10 @@ let UIController = (function() {
         result = result.slice(0, result.length - 2);
       }
 
-      result = eval(result);
+      result = eval(result.toString());
+
+      console.log(current + 'kur');
+
       input.textContent = result;
     },
 
@@ -319,9 +328,7 @@ let calculatorController = (function(operationsCtrl, UICtrl) {
         break;
       case 17:
         current = operationsCtrl.addCurrent(0);
-        // if(current) {
-          UICtrl.updateCurrent(current);
-        // }
+        UICtrl.updateCurrent(current);
         break;
     }
   }

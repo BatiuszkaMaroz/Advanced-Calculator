@@ -1,6 +1,6 @@
 @mixin respond($breakpoint) {
     @if $breakpoint == land {
-      @media all and (orientation: landscape) {
+      @media all and (orientation: landscape) and (min-width: 45em) {
         @content;
       }
     }

@@ -19,7 +19,7 @@
     font-size: 82.5%;
   }
 }
-@media all and (orientation: landscape) {
+@media all and (orientation: landscape) and (min-width: 45em) {
   :root {
     font-size: 50%;
   }
@@ -27,7 +27,8 @@
 
 body {
   height: 100%;
-  background: #ecf0f1;
+  background: #2c3e50;
+  overflow: hidden;
 }
 
 a {
@@ -42,6 +43,11 @@ a {
   grid-gap: 0.5rem;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
+}
+@media all and (orientation: landscape) and (min-width: 45em) {
+  .calculator {
+    padding: 0;
+  }
 }
 .calculator > :nth-child(1) {
   background-position: 0% 0%;
@@ -105,7 +111,7 @@ a {
 }
 .calculator > * {
   background-size: 400% 500%;
-  background-image: linear-gradient(45deg, #f1c40f, #f7b731, #fa8231, #f7b731, #f1c40f);
+  background-image: linear-gradient(45deg, #f1c40f, #f39c12, #e67e22, #d35400);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,7 +144,6 @@ a {
   font-family: "Roboto Mono", monospace;
   font-weight: 300;
   color: white;
-  overflow-x: scroll;
 }
 .result__stored {
   font-size: 3rem;
@@ -147,6 +152,9 @@ a {
 .result__input {
   margin-top: 1rem;
   font-size: 8rem;
+  width: 100%;
+  text-align: right;
+  overflow-x: scroll;
 }
 
 .wrap {
@@ -155,7 +163,7 @@ a {
   align-items: center;
   flex-direction: column;
   height: 100%;
-  background: linear-gradient(45deg, #ecf0f1, #bdc3c7, #95a5a6, #bdc3c7, #ecf0f1);
+  background: linear-gradient(45deg, #ecf0f1, #bdc3c7, #95a5a6, #7f8c8d);
   overflow: hidden;
 }
 @media only screen and (min-width: 45em) {
@@ -163,19 +171,20 @@ a {
     padding: 2rem 10rem;
   }
 }
+@media all and (orientation: landscape) and (min-width: 45em) {
+  .wrap {
+    padding: 0;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
 @media only screen and (min-width: 64em) {
   .wrap {
-    max-width: 40rem;
+    max-width: 50rem;
     height: 80vh;
     padding: 1rem;
     margin: 10vh auto 0 auto;
-    box-shadow: 0 20px 0 -10px #a5b1c2, 0 40px 0 -20px #d1d8e0, 0 60px 0 -30px #a5b1c2, 0 80px 0 -40px #d1d8e0;
-  }
-}
-@media all and (orientation: landscape) {
-  .wrap {
-    padding-top: 0;
-    padding-bottom: 0;
+    box-shadow: 0 20px 0 -10px #7f8c8d, 0 40px 0 -20px #95a5a6, 0 60px 0 -30px #bdc3c7, 0 80px 0 -40px #ecf0f1;
   }
 }
 

@@ -4,28 +4,29 @@
   align-items: center;
   flex-direction: column;
   height: 100%;
-  background: linear-gradient(45deg, #ecf0f1, #bdc3c7, #95a5a6, #bdc3c7, #ecf0f1 );
+  background: linear-gradient(45deg, #ecf0f1, #bdc3c7, #95a5a6, #7f8c8d);
   overflow: hidden;
 
   @include respond(tab) {
     padding: 2rem 10rem;
   }
 
+  @include respond(land) {
+    padding: 0;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
   @include respond(desk) {
-    max-width: 40rem;
+    max-width: 50rem;
     height: 80vh;
     padding: 1rem;
     margin: 10vh auto 0 auto;
     box-shadow:
-    0 20px 0 -10px #a5b1c2,
-    0 40px 0 -20px #d1d8e0,
-    0 60px 0 -30px #a5b1c2,
-    0 80px 0 -40px #d1d8e0;
-  }
-
-  @include respond(land) {
-    padding-top: 0;
-    padding-bottom: 0;
+    0 20px 0 -10px #7f8c8d,
+    0 40px 0 -20px #95a5a6,
+    0 60px 0 -30px #bdc3c7,
+    0 80px 0 -40px #ecf0f1;
   }
 }
 
