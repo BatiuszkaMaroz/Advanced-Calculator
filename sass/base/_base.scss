@@ -15,10 +15,15 @@
   @include respond(desk) {
     font-size: 82.5%;
   }
+
+  @include respond(land) {
+    font-size: 50%;
+  }
 }
 
 body {
   height: 100%;
+  background: #ecf0f1;
 }
 
 a {
