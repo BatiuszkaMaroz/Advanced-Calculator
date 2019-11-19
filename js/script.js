@@ -36,8 +36,14 @@ let operationsController = (function() {
   return {
     addCurrent: function(number) {
       currentValue = currentValue.toString();
+
       if(currentValue == '0' && number == 0) {
         return;
+      }
+      else if (currentValue == '0' && number != 0) {
+        currentValue = number;
+        currentExpression = currentExpression.slice(0, currentExpression.length - 1);
+        currentExpression += number;
       }
       else if (afterEvaluate) {
         afterEval(number);
